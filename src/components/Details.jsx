@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, Dimensions, StyleSheet, ImageBackground, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Dimensions, StyleSheet, ImageBackground, ScrollView, Modal } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { useNavigation } from '@react-navigation/native';
+import achieves from '../constants/achieves';
 import Icons from './Icons';
 
 const { height } = Dimensions.get('window');
@@ -12,6 +13,7 @@ const Details = ({ place }) => {
     const [photobook, setPhotobook] = useState([]);
     const [checked, setChecked] = useState([]);
     const [isVisited, setIsVisited] = useState(false);
+    const [modalState, setModalVisible] = useState({ index: null, visible: false });
 
     useEffect(() => {
         const loadData = async () => {
@@ -35,6 +37,9 @@ const Details = ({ place }) => {
 
 
     const handleUpload = async () => {
+
+        const previousPhotobookLength = photobook.length;
+
         launchImageLibrary(
             { mediaType: 'photo', quality: 1, selectionLimit: 0 },
             async (response) => {
@@ -47,6 +52,10 @@ const Details = ({ place }) => {
                     setPhotobook(updatedPhotobook);
                     await AsyncStorage.setItem('photobook', JSON.stringify(updatedPhotobook));
                     alert('Images uploaded and saved successfully!');
+
+                    if (previousPhotobookLength === 0) {
+                        setModalVisible({ index: 4, visible: true });
+                    }
                 }
             }
         );
@@ -59,6 +68,15 @@ const Details = ({ place }) => {
         setIsVisited(true);
 
         await AsyncStorage.setItem('checked', JSON.stringify(updatedChecked));
+
+        if (checked.length === 0) {
+            setModalVisible({ index: 2, visible: true });
+        }
+
+        if (updatedChecked.length === 12) {
+            setModalVisible({ index: 3, visible: true });
+        }
+
         alert('Checked in successfully!');
     };
 
@@ -96,6 +114,33 @@ const Details = ({ place }) => {
                         <Text style={styles.btnText}>{isVisited ? 'Visited' : 'Check in'}</Text>
                     </TouchableOpacity>
                 </View>
+
+                <Modal
+                    transparent={true}
+                    visible={modalState.visible}
+                    animationType="fade"
+                    onRequestClose={() => setModalVisible({ ...modalState, visible: false })}
+                >
+                    <View style={styles.modalOverlay}>
+                        <View style={styles.modalContent}>
+                            {achieves[modalState.index] ? (
+                                <>
+                                    <Image source={achieves[modalState.index].image} style={styles.modalImage} />
+                                    <Text style={styles.modalTitle}>{achieves[modalState.index].title}</Text>
+                                    <Text style={styles.modalText}>{achieves[modalState.index].text}</Text>
+                                </>
+                            ) : (
+                                <Text style={styles.errorText}>Achievement data not found</Text>
+                            )}
+                            <TouchableOpacity
+                                style={styles.closeButton}
+                                onPress={() => setModalVisible({ ...modalState, visible: false })}
+                            >
+                                <Text style={styles.closeButtonText}>Nice !</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
 
             </View>
         </ImageBackground>
@@ -185,7 +230,49 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#ffe8e8',
         fontWeight: '800',
-    }
+    },
+
+    modalOverlay: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContent: {
+        width: '80%',
+        backgroundColor: '#fff',
+        borderRadius: 12,
+        padding: 20,
+        alignItems: 'center',
+    },
+    modalImage: {
+        width: 100,
+        height: 100,
+        marginBottom: 15,
+    },
+    modalTitle: {
+        fontSize: 18,
+        fontWeight: '700',
+        marginBottom: 10,
+        textAlign: 'center',
+    },
+    modalText: {
+        fontSize: 14,
+        color: '#555',
+        textAlign: 'center',
+        marginBottom: 20,
+    },
+    closeButton: {
+        paddingHorizontal: 30,
+        paddingVertical: 7,
+        backgroundColor: '#fc4747',
+        borderRadius: 12,
+    },
+    closeButtonText: {
+        fontSize: 14,
+        color: '#fff',
+        fontWeight: '700',
+    },    
 
 });
 

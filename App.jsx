@@ -11,6 +11,8 @@ import DetailsScreen from './src/screens/DetailsScreen.jsx';
 import MapScreen from './src/screens/MapScreen.jsx';
 import PhotoScreen from './src/screens/PhotoScreen.jsx';
 import AchievesScreen from './src/screens/AchievesScreen.jsx';
+import BookScreen from './src/screens/BookScreen.jsx';
+import MoreScreen from './src/screens/MoreScreen.jsx';
 
 import Welcome from './src/components/Welcome';
 
@@ -50,6 +52,16 @@ const App = () => {
                     <Stack.Screen 
                         name="AchievesScreen" 
                         component={AchievesScreen} 
+                        options={{ headerShown: false }} 
+                    />
+                    <Stack.Screen 
+                        name="BookScreen" 
+                        component={BookScreen} 
+                        options={{ headerShown: false }} 
+                    />
+                    <Stack.Screen 
+                        name="MoreScreen" 
+                        component={MoreScreen} 
                         options={{ headerShown: false }} 
                     />
                 </Stack.Navigator>

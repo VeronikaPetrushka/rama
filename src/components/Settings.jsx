@@ -10,7 +10,8 @@ const Settings = ({ visible, onClose }) => {
     const { isPlaying, togglePlay } = useMusic();
     const [showResetConfirmation, setShowResetConfirmation] = useState(false);
 
-    const handleToggleLoudness = async () => {
+    const handleToggleLoudness = async (event) => {
+        event.persist();
         togglePlay();
     };
 
@@ -47,7 +48,7 @@ const Settings = ({ visible, onClose }) => {
                 {showResetConfirmation ? (
                     <>
                         <Text style={styles.confirmationText}>
-                        Are you sure you want to reset your account? This action will delete your profile, including your notes, photo album, visited places, and achievements!
+                        Are you sure you want to reset your account? This action will delete your photobook, visited places, and achievements!
                         </Text>
                         <TouchableOpacity style={styles.resetBtn} onPress={handleReset}>
                             <Text style={styles.btnText}>Reset</Text>

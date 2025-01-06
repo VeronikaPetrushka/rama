@@ -2,23 +2,49 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, Dimensions, ImageBackground } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import achieves from '../constants/achieves.js'
 import Icons from './Icons';
 
-const { width, height } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
 const Achieves = () => {
     const navigation = useNavigation();
     const [checked, setChecked] = useState([]);
+    const [photobook, setPhotobook] = useState([]);
 
     useEffect(() => {
-        const fetchVisited = async () => {
-            const storedData = await AsyncStorage.getItem('checked');
-            if (storedData) {
-                setChecked(JSON.parse(storedData));
+        const loadCheckedData = async () => {
+            const storedChecked = await AsyncStorage.getItem('checked');
+            if (storedChecked) {
+                setChecked(JSON.parse(storedChecked));
             }
         };
-        fetchVisited();
+        
+        const loadPhotobookData = async () => {
+            const storedPhotobook = await AsyncStorage.getItem('photobook');
+            if (storedPhotobook) {
+                setPhotobook(JSON.parse(storedPhotobook));
+            }
+        };
+
+        loadCheckedData();
+        loadPhotobookData();
     }, []);
+
+    console.log(photobook.length)
+
+    const checkAchievementIndex = (index) => {
+        if (index === 2 && checked.length > 0) {
+            return true;
+        }
+        if (index === 3 && checked.length >= 12) {
+            return true;
+        }
+        if (index === 4 && photobook.length > 0) {
+            return true;
+        }
+        return false;
+    };
 
     return (
         <ImageBackground source={require('../assets/back/1.png')} style={{flex: 1}}>
@@ -29,25 +55,23 @@ const Achieves = () => {
 
                 <Text style={styles.title}>Achievements</Text>
 
-                <ScrollView style={{width: '100%'}} contentContainerStyle={styles.contentContainer}>
-                    {checked.length > 0 ? (
-                        checked.map((item, index) => (
+                <ScrollView style={{width: '100%'}}>
+                    {
+                        achieves.map((item, index) => (
                             <View key={index} style={styles.card}>
-                                <Text style={styles.placeName}>{item.name}</Text>
-                                <Text style={styles.date}>{item.date}</Text>
-                                <Image 
-                                    source={item.image} 
-                                    style={styles.image} 
-                                    resizeMode="cover" 
-                                />
-                                <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('DetailsScreen', { place: item})}>
-                                    <Text style={styles.btnText}>Read more</Text>
-                                </TouchableOpacity>
+                                {checkAchievementIndex(index) && 
+                                <View style={styles.done}>
+                                    <Icons type={'done'} />
+                                </View>
+                                }
+                                <Text style={styles.name}>{item.title}</Text>
+                                <View style={styles.innerBox}>
+                                    <Image source={item.image} style={styles.image} />
+                                    <Text style={styles.text}>{item.condition}</Text>
+                                </View>
                             </View>
                         ))
-                    ) : (
-                        <Text style={styles.noDataText}>No achievements yet. Check in first and come back !</Text>
-                    )}
+                    }
                 </ScrollView>
 
             </View>
@@ -73,6 +97,14 @@ const styles = StyleSheet.create({
         zIndex: 10
     },
 
+    done: {
+        width: 25,
+        height: 25,
+        position: 'absolute',
+        top: 10,
+        right: 10,
+    },
+
     title: {
         fontSize: 26,
         color: '#ffe8e8',
@@ -86,7 +118,8 @@ const styles = StyleSheet.create({
     },
 
     card: {
-        width: width * 0.9,
+        width: '100%',
+        height: 120,
         backgroundColor: '#ffe8e8',
         marginBottom: 20,
         borderRadius: 10,
@@ -99,48 +132,34 @@ const styles = StyleSheet.create({
         elevation: 3,
     },
 
-    placeName: {
+    name: {
         fontSize: 18,
         fontWeight: '800',
         color: '#c90404',
-        marginBottom: 10,
+        marginBottom: 15,
         textAlign: 'center'
     },
 
-    date: {
-        fontSize: 12,
-        fontWeight: '300',
-        color: '#c90404',
-        marginBottom: 10, 
+    innerBox: {
+        width: '100%',
+        height: '100%',
+        flexDirection: 'row',
+        alignItems: 'flex-start'
+    },
+
+    text: {
+        fontSize: 14,
+        fontWeight: '600',
+        color: '#fc4747',
+        width: '65%'
     },
 
     image: {
-        width: '100%',
-        height: 200,
-        borderRadius: 10,
-        marginBottom: 10,
+        width: '30%',
+        height: 50,
+        resizeMode: 'contain',
+        marginRight: 15
     },
-
-    noDataText: {
-        fontSize: 16,
-        color: '#ffe8e8',
-        marginTop: 20,
-    },
-
-    btn: {
-        width: '100%',
-        padding: 12,
-        borderRadius: 12,
-        backgroundColor: '#fc4747',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-
-    btnText: {
-        fontSize: 14,
-        color: '#ffe8e8',
-        fontWeight: '800',
-    }
 
 });
 

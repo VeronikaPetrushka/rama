@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
 
-const Icons = ({ type, light }) => {
+const Icons = ({ type }) => {
 
   let imageSource;
   let iconStyle = [styles.icon];
@@ -16,11 +16,14 @@ const Icons = ({ type, light }) => {
       break;
     case 'on':
       imageSource = require('../assets/common/on.png');
-      iconStyle.push(styles.color);
+      iconStyle.push(styles.light);
       break;
     case 'off':
       imageSource = require('../assets/common/off.png');
-      iconStyle.push(styles.color);
+      iconStyle.push(styles.light);
+      break;
+    case 'done':
+      imageSource = require('../assets/common/done.png');
       break;
   }
 
@@ -48,7 +51,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     objectFit: 'cover',
-    tintColor: '#fa982f',
+    tintColor: '#fc4747',
   },
   contain: {
     width: '100%',
