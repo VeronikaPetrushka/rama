@@ -28,7 +28,7 @@ const Home = () => {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('BookScreen')}>
-                        <Text style={styles.btnText}>Histories</Text>
+                        <Text style={styles.btnText}>Heritage</Text>
                     </TouchableOpacity>
                 </View>
 

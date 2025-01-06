@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'flex-start',
-        paddingBottom: 15
+        paddingBottom: 25
     },
 
     back: {
