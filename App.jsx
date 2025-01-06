@@ -7,6 +7,7 @@ import { MusicProvider } from './src/constants/music.js';
 import MusicPlayer from './src/components/MusicPlayer';
 
 import HomeScreen from './src/screens/HomeScreen';
+import DetailsScreen from './src/screens/DetailsScreen.jsx';
 
 import Welcome from './src/components/Welcome';
 
@@ -26,6 +27,11 @@ const App = () => {
                     <Stack.Screen 
                         name="HomeScreen" 
                         component={HomeScreen} 
+                        options={{ headerShown: false }} 
+                    />
+                    <Stack.Screen 
+                        name="DetailsScreen" 
+                        component={DetailsScreen} 
                         options={{ headerShown: false }} 
                     />
                 </Stack.Navigator>

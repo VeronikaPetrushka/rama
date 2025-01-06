@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     objectFit: 'cover',
-    tintColor: '#3d4145',
+    tintColor: '#ffe8e8',
   },
   light: {
     width: '100%',
