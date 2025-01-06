@@ -13,6 +13,7 @@ import PhotoScreen from './src/screens/PhotoScreen.jsx';
 import AchievesScreen from './src/screens/AchievesScreen.jsx';
 import BookScreen from './src/screens/BookScreen.jsx';
 import MoreScreen from './src/screens/MoreScreen.jsx';
+import QuizScreen from './src/screens/QuizScreen.jsx';
 
 import Welcome from './src/components/Welcome';
 
@@ -62,6 +63,11 @@ const App = () => {
                     <Stack.Screen 
                         name="MoreScreen" 
                         component={MoreScreen} 
+                        options={{ headerShown: false }} 
+                    />
+                    <Stack.Screen 
+                        name="QuizScreen" 
+                        component={QuizScreen} 
                         options={{ headerShown: false }} 
                     />
                 </Stack.Navigator>

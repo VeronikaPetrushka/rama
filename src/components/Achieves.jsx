@@ -11,6 +11,8 @@ const Achieves = () => {
     const navigation = useNavigation();
     const [checked, setChecked] = useState([]);
     const [photobook, setPhotobook] = useState([]);
+    const [quizRecords, setQuizRecords] = useState([]);
+    const [completedCount, setCompletedCount] = useState(0);
 
     useEffect(() => {
         const loadCheckedData = async () => {
@@ -27,13 +29,34 @@ const Achieves = () => {
             }
         };
 
+        const loadQuizRecords = async () => {
+            const storedQuizRecords = await AsyncStorage.getItem('quizRecords');
+            if (storedQuizRecords) {
+                setQuizRecords(JSON.parse(storedQuizRecords));
+            }
+        };
+
+        const loadCompletedCount = async () => {
+            const storedCompletedCount = await AsyncStorage.getItem('completedCount');
+            if (storedCompletedCount) {
+                setCompletedCount(parseInt(storedCompletedCount, 10));
+            }
+        };
+
         loadCheckedData();
         loadPhotobookData();
+        loadQuizRecords();
+        loadCompletedCount();
     }, []);
 
-    console.log(photobook.length)
-
     const checkAchievementIndex = (index) => {
+
+        if (index === 0 && completedCount > 0) {
+            return true;
+        }
+        if (index === 1 && quizRecords.some(record => record === 20)) {
+            return true;
+        }
         if (index === 2 && checked.length > 0) {
             return true;
         }
@@ -43,6 +66,7 @@ const Achieves = () => {
         if (index === 4 && photobook.length > 0) {
             return true;
         }
+
         return false;
     };
 

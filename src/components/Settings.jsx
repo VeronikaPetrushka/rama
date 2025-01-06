@@ -19,6 +19,8 @@ const Settings = ({ visible, onClose }) => {
         try {
             await AsyncStorage.removeItem('photobook');
             await AsyncStorage.removeItem('checked');
+            await AsyncStorage.removeItem('completedCount');
+            await AsyncStorage.removeItem('quizRecords');
 
             setShowResetConfirmation(false);
 
