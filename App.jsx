@@ -8,6 +8,9 @@ import MusicPlayer from './src/components/MusicPlayer';
 
 import HomeScreen from './src/screens/HomeScreen';
 import DetailsScreen from './src/screens/DetailsScreen.jsx';
+import MapScreen from './src/screens/MapScreen.jsx';
+import PhotoScreen from './src/screens/PhotoScreen.jsx';
+import AchievesScreen from './src/screens/AchievesScreen.jsx';
 
 import Welcome from './src/components/Welcome';
 
@@ -32,6 +35,21 @@ const App = () => {
                     <Stack.Screen 
                         name="DetailsScreen" 
                         component={DetailsScreen} 
+                        options={{ headerShown: false }} 
+                    />
+                    <Stack.Screen 
+                        name="MapScreen" 
+                        component={MapScreen} 
+                        options={{ headerShown: false }} 
+                    />
+                    <Stack.Screen 
+                        name="PhotoScreen" 
+                        component={PhotoScreen} 
+                        options={{ headerShown: false }} 
+                    />
+                    <Stack.Screen 
+                        name="AchievesScreen" 
+                        component={AchievesScreen} 
                         options={{ headerShown: false }} 
                     />
                 </Stack.Navigator>

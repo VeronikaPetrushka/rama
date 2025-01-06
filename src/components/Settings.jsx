@@ -16,9 +16,8 @@ const Settings = ({ visible, onClose }) => {
 
     const handleReset = async () => {
         try {
-            await AsyncStorage.removeItem('album');
-            await AsyncStorage.removeItem('places');
-            await AsyncStorage.removeItem('notes');
+            await AsyncStorage.removeItem('photobook');
+            await AsyncStorage.removeItem('checked');
 
             setShowResetConfirmation(false);
 
