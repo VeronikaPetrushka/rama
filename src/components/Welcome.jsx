@@ -16,7 +16,7 @@ const Welcome = ({ visible, onClose }) => {
                     <Text style={styles.text}>Discover the rich heritage of Canada’s Indigenous peoples. Dive into detailed articles, mark key locations, capture memories in your photo album, and test your knowledge with engaging quizzes. Earn achievements as you explore and celebrate the First Nations' legacy!</Text>
 
                     <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-                        <Text style={styles.buttonText}>Close</Text>
+                        <Text style={styles.buttonText}>Start</Text>
                     </TouchableOpacity>    
 
                 </View>
@@ -52,14 +52,14 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: '800',
         lineHeight: 23,
-        color: '#2b790e',
+        color: '#fc4747',
         marginBottom: 20,
         textAlign: 'center',
     },
     text: {
-        fontSize: 16,
+        fontSize: 17,
         fontWeight: '400',
-        lineHeight: 16,
+        lineHeight: 19,
         color: '#3C3C3B',
         marginBottom: 28,
         textAlign: 'center'
@@ -70,13 +70,13 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#02ae53',
+        backgroundColor: '#fc4747',
         alignSelf: 'center'
     },
     buttonText: {
         color: '#fff',
-        fontSize: 17,
-        fontWeight: '300',
+        fontSize: 16,
+        fontWeight: '900',
     }
 });
 
