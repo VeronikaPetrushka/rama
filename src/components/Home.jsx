@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Dimensions, StyleSheet, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Settings from './Settings';
 import Map from './Map';
 
 const { height } = Dimensions.get('window');
 
 const Home = () => {
     const navigation = useNavigation();
-    const [settingsVisible, setSettingsVisible] = useState(false);
 
     return (
         <ImageBackground source={require('../assets/back/1.png')} style={{flex: 1}}>
@@ -32,17 +30,9 @@ const Home = () => {
                     </TouchableOpacity>
                 </View>
 
-                <View style={styles.btnsContainer}>
-                    <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('AchievesScreen')}>
-                        <Text style={styles.btnText}>Achievements</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.btn} onPress={() => setSettingsVisible(true)}>
-                        <Text style={styles.btnText}>Settings</Text>
-                    </TouchableOpacity>
-                </View>
-
-                <Settings visible={settingsVisible} onClose={setSettingsVisible} />
+                <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('AchievesScreen')}>
+                    <Text style={styles.btnText}>Achievements</Text>
+                </TouchableOpacity>
 
             </View>
         </ImageBackground>
